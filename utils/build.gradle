@@ -1,33 +1,25 @@
-plugins {
-    // id for library
-    // id for maven to publish jar to local repository
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8 // Match root project
 }
 
-java {
-// provide sourceCompatibility
-}
+version = '1.3.5'
 
 repositories {
-// provide repository, where required dependencies are located
+    mavenCentral()
+    mavenLocal()
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-// provide groupId
-// provide artifactId
-// provide version
-
-            from components.java
-        }
-    }
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.10' // Apache Commons Lang 3.10
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1' // For tests
 }
-
-//add Apache Apache Commons Lang 3.10 (or higher) dependency
 
 jar {
     manifest {
-        //provide manifest with such attributes as 'Implementation-Title', 'Implementation-Version'
+        attributes(
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+        )
     }
 }
 
@@ -35,4 +27,6 @@ test {
     useJUnitPlatform()
 }
 
-publishMavenPublicationToMavenLocal {}.mustRunAfter('build')
+tasks.named('publishMavenPublicationToMavenLocal') {
+    mustRunAfter 'build'
+}

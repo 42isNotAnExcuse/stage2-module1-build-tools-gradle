@@ -1,11 +1,43 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
 repositories {
     mavenCentral()
 }
 
 subprojects {
-    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
 
-    dependencies {
-        testImplementation('org.junit.jupiter:junit-jupiter:5.8.1')
+    repositories {
+        mavenCentral()
+        mavenLocal() // Add mavenLocal for demo to resolve utils artifact
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8 // Example: Java 8 compatibility
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    publishing {
+        publications {
+            // Use a unique publication name per subproject
+            maven(MavenPublication) {
+                groupId = project.group
+                artifactId = project.name
+                version = project.version
+
+                from components.java
+            }
+        }
     }
 }

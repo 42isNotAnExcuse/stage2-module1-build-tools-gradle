@@ -3,7 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation 'org.example:utils:1.0-SNAPSHOT'
+    implementation project(':utils')
+//    implementation 'org.example:utils:1.0-SNAPSHOT'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 }
 
@@ -11,6 +12,6 @@ test {
     useJUnitPlatform()
 }
 
-tasks.named('compileJava') {
-    dependsOn ':utils:publishToMavenLocal'
-}
+//tasks.named('compileJava') {
+//    dependsOn ':utils:publishToMavenLocal'
+//}
